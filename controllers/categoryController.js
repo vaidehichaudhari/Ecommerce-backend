@@ -1,19 +1,19 @@
 const Category = require('../models/categoryModel')
-createCategory  =async(req,res)=>{
 
-   console.log(req.body)
-       const {name} = req.body
-   try {
-       const newCategory = await Category.create({name})
-       res.status(200).send({message:'Category created successfully',success:true})
-    } catch (error) {
+
+const createCategory = async(req,res)=>{
+    console.log(req.body)
+    const {name} = req.body
+try {
+    const newCategory= await Category.create({name})
+    res.status(200).send({message:'category created successfully',success:true})
+} catch (error) {
     res.status(500).send({error:error})
-        
-    }
 }
-getAllCategories =async(req,res)=>{
+}
+ const getAllCategories = async(req,res)=>{
     try {
-        const categories = await Category.findAll()
+        const categories= await Category.findAll()
     res.status(200).send({categories:categories,success:true})
         
     } catch (error) {
@@ -21,40 +21,9 @@ getAllCategories =async(req,res)=>{
         
     }
 }
-getCategoryByID =(req,res)=>{
-    try {
-    res.status(200).send({message:'success'})
-        
-    } catch (error) {
-    res.status(500).send({error:error})
-        
-    }
-}
-updateCategory =(req,res)=>{
-    try {
-    res.status(200).send({message:'success'})
-        
-    } catch (error) {
-    res.status(500).send({error:error})
-        
-    }
-}
-deleteCategory =(req,res)=>{
-    try {
-    res.status(200).send({message:'success'})
-        
-    } catch (error) {
-    res.status(500).send({error:error})
-        
-    }
-}
 
 
-
-
-module.exports = {createCategory,
-getAllCategories,
-getCategoryByID,
-updateCategory,
-deleteCategory
+module.exports = {
+    createCategory, getAllCategories, 
+    
 }

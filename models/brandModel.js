@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../confiq/db'); // now correctly importing the instance
+const { sequelize } = require('../confiq/db'); // Make sure this path is correct
 
 const Brand = sequelize.define('Brand', {
   id: {
@@ -11,10 +11,24 @@ const Brand = sequelize.define('Brand', {
     type: DataTypes.STRING(30),
     allowNull: false,
     unique: true
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  createdBy: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  updatedBy: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   tableName: 'Brands',
-  timestamps: false
+  timestamps: false, // enables createdAt and updatedAt
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 });
 
 module.exports = Brand;
