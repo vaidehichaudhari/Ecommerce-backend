@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../confiq/db');
 
-const Brand = sequelize.define('Brand', {
+const Category = sequelize.define('Category', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -25,10 +25,10 @@ const Brand = sequelize.define('Brand', {
     allowNull: true
   }
 }, {
-  tableName: 'Brands',
-  timestamps: false, // handles createdAt and updatedAt automatically
+  tableName: 'Categories',
+  timestamps: false, // adds createdAt and updatedAt
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 });
 
-module.exports = Brand;
+module.exports = Category;
