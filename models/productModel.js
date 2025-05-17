@@ -1,5 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../confiq/db');
+const Brand = require('./brandModel')
+const Category = require('./categoryModel')
 
 const Product = sequelize.define('Product', {
   id: {
@@ -59,3 +61,15 @@ const Product = sequelize.define('Product', {
 });
 
 module.exports = Product;
+
+//Associations with category and brand
+
+Product.belongsTo(Brand, {
+    foreignKey:'id',
+    as:'Brands'
+})
+
+Product.belongsTo(Category, {
+    foreignKey:'id',
+    as:'Categories'
+})
