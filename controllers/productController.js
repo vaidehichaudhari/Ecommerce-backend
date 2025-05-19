@@ -1,5 +1,6 @@
 const Product = require('../models/productModel');
-
+const Category = require('../models/categoryModel');
+const Brand = require('../models/brandModel');
 // Create a new product
 const createProduct = async (req, res) => {
   try {
@@ -62,6 +63,52 @@ const deleteProduct = async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
+};const getProductsByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params; // or req.query.categoryId
+
+    if (!categoryId) {
+      return res.status(400).json({ message: 'Category ID is required' });
+    }
+
+    // Fetch all products with matching categoryId
+    const products = await Product.findAll({
+      where: { categoryId }
+    });
+
+    if (!products.length) {
+      return res.status(404).json({ message: 'No products found for this category' });
+    }
+
+    res.status(200).json({ success: true, data: products });
+  } catch (error) {
+    console.error('getProductsByCategory error:', error);
+    res.status(500).json({ error: error.message });
+  }
+
+};
+
+const getProductsByBrand = async (req, res) => {
+  try {
+    const { brandId } = req.params;  // or req.query.brandId
+
+    if (!brandId) {
+      return res.status(400).json({ message: 'Brand ID is required' });
+    }
+
+    const products = await Product.findAll({
+      where: { brandId }
+    });
+
+    if (!products.length) {
+      return res.status(404).json({ message: 'No products found for this brand' });
+    }
+
+    res.status(200).json({ success: true, data: products });
+  } catch (error) {
+    console.error('getProductsByBrand error:', error);
+    res.status(500).json({ error: error.message });
+  }
 };
 
 module.exports = {
@@ -69,5 +116,7 @@ module.exports = {
   getAllProducts,
   getProductByID,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductsByCategory,
+  getProductsByBrand
 };

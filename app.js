@@ -18,6 +18,9 @@ app.use('/api/product', productRoute);
 
 const categoryRoute = require('./routes/categoryRoute');
 app.use('/api/category', categoryRoute);
+
+const userRoute = require('./routes/userRoute')
+app.use('/api/user', userRoute);
 // Sync DB & start server
 (async () => {
   try {

@@ -56,8 +56,8 @@ const Product = sequelize.define('Product', {
 }, {
   tableName: 'Products',
   timestamps: false,
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  // createdAt: 'createdAt',
+  // updatedAt: 'updatedAt'
 });
 
 module.exports = Product;

@@ -8,7 +8,7 @@ const Brand = sequelize.define('Brand', {
     autoIncrement: true
   },
   name: {
-    type: DataTypes.STRING(30),
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },
@@ -27,8 +27,8 @@ const Brand = sequelize.define('Brand', {
 }, {
   tableName: 'Brands',
   timestamps: false, // enables createdAt and updatedAt
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  // createdAt: 'createdAt',
+  // updatedAt: 'updatedAt'
 });
 
 module.exports = Brand;
