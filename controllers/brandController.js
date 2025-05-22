@@ -5,6 +5,10 @@ const createBrand = async (req, res) => {
   try {
     const { name, image,createdBy  } = req.body;
 
+  if(!req.user.isAdmin){
+        res.status(401).send({message:"Not Authorized"})
+    }
+
     const newBrand = await Brand.create({
       name,
       image,
@@ -53,7 +57,9 @@ const updateBrand = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, image, updatedBy } = req.body;
-
+  if(!req.user.isAdmin){
+        res.status(401).send({message:"Not Authorized"})
+    }
     // Validate ID
     if (!id) {
       return res.status(400).json({ message: 'Brand ID is required in URL.' });
@@ -88,7 +94,9 @@ const deleteBrand = async (req, res) => {
     const { id } = req.params;
 
     const deleted = await Brand.destroy({ where: { id } });
-
+  if(!req.user.isAdmin){
+        res.status(401).send({message:"Not Authorized"})
+    }
     if (!deleted) {
       return res.status(404).send({ message: 'Brand not found', success: false });
     }

@@ -10,7 +10,9 @@ const createCategory = async (req, res) => {
       image,
       createdBy
     });
-
+if(!req.user.isAdmin){
+        res.status(401).send({message:"Not Authorized"})
+    }
     res.status(201).send({
       message: 'Category created successfully',
       success: true,
@@ -57,7 +59,9 @@ const updateCategory = async (req, res) => {
       { name, image, updatedBy },
       { where: { id } }
     );
-
+if(!req.user.isAdmin){
+        res.status(401).send({message:"Not Authorized"})
+    }
     if (!updated) {
       return res.status(404).send({ message: 'Category not found', success: false });
     }
@@ -74,7 +78,9 @@ const deleteCategory = async (req, res) => {
     const { id } = req.params;
 
     const deleted = await Category.destroy({ where: { id } });
-
+if(!req.user.isAdmin){
+        res.status(401).send({message:"Not Authorized"})
+    }
     if (!deleted) {
       return res.status(404).send({ message: 'Category not found', success: false });
     }

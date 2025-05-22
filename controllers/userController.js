@@ -35,8 +35,18 @@ const LoginUser = async(req,res)=>{
     }
 }
 
-const getUserInfo = (req,res) =>{
-    req.user
+const getUserInfo = async(req,res) =>{
+   console.log("req.user",req.user)
+    try {
+
+        loggedUser = await User.findOne({where:{id:req.user.id},attributes: ['id','name','email','isAdmin']})
+res.status(200).send({message:"got user info",loggedUser:loggedUser})
+            
+    } catch (error) {
+        res.status(500).send({error:error})
+        
+    }
+
 }
 
 module.exports = {
