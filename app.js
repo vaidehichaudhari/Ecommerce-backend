@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path')
 const { sequelize, connectDB } = require('./confiq/db'); // ✅ Destructure here
 //const Brand = require('./models/brandModel');
 //const Product=require('./models/productModel');
@@ -25,6 +26,10 @@ app.use('/api/category', categoryRoute);
 
 const userRoute = require('./routes/userRoute')
 app.use('/api/user', userRoute);
+
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Sync DB & start server
 (async () => {
   try {

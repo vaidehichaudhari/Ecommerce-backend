@@ -2,24 +2,27 @@ const Brand = require('../models/brandModel');
 
 // Create a new brand
 const createBrand = async (req, res) => {
-  try {
-    const { name, image,createdBy  } = req.body;
+  console.log(req.body);
+  console.log(req.user.isAdmin, "Is admin");
 
-  if(!req.user.isAdmin){
-        res.status(401).send({message:"Not Authorized"})
+  const name = req.body.name.trim().toLowerCase(); // normalize name
+  const image = req.file ? req.file.filename : null;
+
+  try {
+    if (!req.user.isAdmin) {
+      return res.status(401).send({ message: "Not Authorized" });
     }
 
-    const newBrand = await Brand.create({
-      name,
-      image,
-    createdBy
-    });
+    const existingBrand = await Brand.findOne({ where: { name } }); // correct Sequelize usage
+    console.log(existingBrand, "existingBrand");
 
-    res.status(201).send({
-      message: 'Brand created successfully',
-      success: true,
-      data: newBrand
-    });
+    if (existingBrand) {
+      return res.status(409).send({ message: "Brand already exists" });
+    }
+
+    const newBrand = await Brand.create({ name, image });
+    res.status(200).send({ message: "Brand created successfully", success: true });
+
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
@@ -28,12 +31,21 @@ const createBrand = async (req, res) => {
 // Get all brands
 const getAllBrands = async (req, res) => {
   try {
-    const brands = await Brand.findAll();
-    res.status(200).send({ brands, success: true });
+    const brands = await Brand.findAll({ order: [['name', 'ASC']] });
+
+    const modifiedBrands = brands.map((brand) => ({
+      id: brand.id,
+      name: brand.name,
+      image: `http://localhost:7000/uploads/${brand.image}`
+    }));
+
+    res.status(200).send({ brands: modifiedBrands, success: true });
+
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 };
+
 
 // Get brand by ID
 const getBrandByID = async (req, res) => {
