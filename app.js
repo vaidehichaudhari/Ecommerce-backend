@@ -2,12 +2,14 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const path = require('path')
-const { sequelize, connectDB } = require('./confiq/db'); // ✅ Destructure here
+const { sequelize, connectDB } = require('./confiq/db'); 
 //const Brand = require('./models/brandModel');
 //const Product=require('./models/productModel');
 //const Category=require('./models/categoryModel');
 app.use(express.json());
 
+// For form data (e.g., file uploads + text fields)
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: 'http://localhost:5173', // Frontend URL
   credentials: true,               // Needed if using cookies or auth headers

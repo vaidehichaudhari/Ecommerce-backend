@@ -5,11 +5,11 @@ const multerMiddleware=require('../middleware/multer')
 const router = express.Router();
 
 
-router.post('/create',authMiddleware.auth,multerMiddleware.single('image'), brandController.createBrand)
+router.post('/create',authMiddleware.auth, multerMiddleware.single('brandimage'), brandController.createBrand)
 router.get('/getAllBrands', brandController.getAllBrands)
 router.get('/getBrandByID/:id', brandController.getBrandByID)
-router.put('/updateBrand/:id',authMiddleware.auth, brandController.updateBrand)
-router.delete('/deleteBrand/:id', authMiddleware.auth,brandController.deleteBrand)
+router.put('/updateBrand/:id',authMiddleware.auth, multerMiddleware.single('brandimage'),brandController.updateBrand)
+router.delete('/deleteBrand/:id',authMiddleware.auth, authMiddleware.auth,brandController.deleteBrand)
 
 
 module.exports = router;
